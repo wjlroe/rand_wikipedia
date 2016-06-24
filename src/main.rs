@@ -45,6 +45,9 @@ fn main() {
         "composers" => Some(COMPOSERS_BY_NAME),
         _ => None,
     };
-    let name = rand_item_from_page(page.unwrap());
-    println!("{}", name);
+    if let Some(page_name) = page {
+        println!("{}", rand_item_from_page(page_name));
+    } else {
+        println!("'{}' not understood", cmd);
+    }
 }
