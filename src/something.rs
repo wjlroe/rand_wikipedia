@@ -1,31 +1,25 @@
 extern crate hyper;
-extern crate scraper;
-extern crate rand;
 extern crate clap;
 
+use std::fs::File;
+use std::io::Write;
 use clap::{Arg, App};
 use std::io::Read;
 use hyper::Client;
-use scraper::{Html, Selector};
 
 const COMPOSERS_BY_NAME: &'static str = "https://en.wikipedia.org/wiki/List_of_composers_by_name";
-const LIST_ITEMS: &'static str = "#bodyContent > #mw-content-text > div > ul > li > a";
 
 fn rand_item_from_page(page: &str) -> String {
     let client = Client::new();
     let mut res = client.get(page).send().unwrap();
     assert_eq!(res.status, hyper::Ok);
     let mut body_string = String::new();
+    let mut cached_file = File::create(page.to_string() + ".html").unwrap();
     res.read_to_string(&mut body_string).unwrap();
-    let document = Html::parse_document(&body_string);
-    let selector = Selector::parse(LIST_ITEMS).unwrap();
+    cached_file.write_all(body_string.as_bytes()).unwrap();
 
-    let mut rng = rand::thread_rng();
-    let names = document.select(&selector)
-        .map(|element| element.text().collect::<Vec<&str>>().join(" "));
-    let samples = rand::sample(&mut rng, names, 1);
-    let element: &String = samples.first().unwrap();
-    element.clone()
+    let names = parse_page(body_string);
+    rand_name(names)
 }
 
 fn main() {
@@ -36,7 +30,6 @@ fn main() {
             .long("page")
             .value_name("PAGE")
             .help("Which page to scrape")
-            .required(true)
             .takes_value(true))
         .get_matches();
 
