@@ -18,6 +18,16 @@ fn test_parse_list_of_names() {
 }
 
 #[test]
+fn test_parse_cached_page() {
+    let mut f = File::open("tests/List_of_composers_by_name.html").unwrap();
+    let mut test_page = String::new();
+    f.read_to_string(&mut test_page).unwrap();
+
+    let result = rand_wikipedia::parse_page(test_page);
+    assert!(result.contains(&"Peter Ablinger".to_string()));
+}
+
+#[test]
 fn test_exclude_a_list_from_names() {
     let names: Vec<String> = vec_str_to_vec_string(vec!["Sara", "Bob"]);
     let excluding = vec_str_to_vec_string(vec!["Bob"]);
