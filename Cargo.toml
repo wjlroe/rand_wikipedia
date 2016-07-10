@@ -8,3 +8,7 @@ hyper = "*"
 scraper = "*"
 rand = "*"
 clap = "*"
+
+[[bin]]
+name = "main"
+doc = false
