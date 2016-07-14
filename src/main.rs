@@ -4,11 +4,12 @@ extern crate clap;
 
 use std::fs::File;
 use std::io::Write;
-use clap::{Arg, App};
+use clap::{App, Arg};
 use std::io::Read;
 use hyper::Client;
 
-const COMPOSERS_BY_NAME: &'static str = "https://en.wikipedia.org/wiki/List_of_composers_by_name";
+const COMPOSERS_BY_NAME: &'static str = "https://en.wikipedia.\
+                                         org/wiki/List_of_composers_by_name";
 
 fn rand_item_from_page(page: &str) -> String {
     let client = Client::new();
@@ -25,20 +26,20 @@ fn rand_item_from_page(page: &str) -> String {
 
 fn main() {
     let cli = App::new("Random wikipedia thing")
-        .version("0.1")
-        .arg(Arg::with_name("page")
-            .short("p")
-            .long("page")
-            .value_name("PAGE")
-            .help("Which page to scrape")
-            .takes_value(true))
-        .arg(Arg::with_name("url")
-            .short("u")
-            .long("url")
-            .value_name("URL")
-            .help("Which wikipedia page to use")
-            .takes_value(true))
-        .get_matches();
+                  .version("0.1")
+                  .arg(Arg::with_name("page")
+                           .short("p")
+                           .long("page")
+                           .value_name("PAGE")
+                           .help("Which page to scrape")
+                           .takes_value(true))
+                  .arg(Arg::with_name("url")
+                           .short("u")
+                           .long("url")
+                           .value_name("URL")
+                           .help("Which wikipedia page to use")
+                           .takes_value(true))
+                  .get_matches();
 
     let cmd = cli.value_of("page").unwrap_or("");
     let url = cli.value_of("url").unwrap_or(COMPOSERS_BY_NAME);
