@@ -4,7 +4,7 @@ extern crate scraper;
 use std::collections::HashSet;
 use scraper::{Html, Selector};
 
-const LIST_ITEMS: &'static str = "#bodyContent > #mw-content-text > div > ul > li > a";
+const LIST_ITEMS: &'static str = "#bodyContent > #mw-content-text > div ul > li > a";
 
 pub fn parse_page(page_contents: String) -> Vec<String> {
     let document = Html::parse_document(&page_contents);
