@@ -9,19 +9,13 @@ fn vec_str_to_vec_string(input: Vec<&str>) -> Vec<String> {
 
 #[test]
 fn test_parse_list_of_names() {
-    use rand_wikipedia::Link;
-
     let mut f = File::open("tests/test-data.html").unwrap();
     let mut test_page = String::new();
     f.read_to_string(&mut test_page).unwrap();
 
     assert_eq!(
         rand_wikipedia::parse_page(test_page),
-        vec![
-            Link::new("Sara", "sara"),
-            Link::new("Bob", "bob"),
-            Link::new("Alice", "alice"),
-        ]
+        vec!["Sara", "Bob", "Alice"]
     );
 }
 
