@@ -4,18 +4,6 @@ extern crate scraper;
 use std::collections::HashSet;
 use scraper::{Html, Selector};
 
-#[derive(PartialEq)]
-pub struct Link {
-    name: String,
-    link: String,
-}
-
-impl Link {
-    fn new(name: &str, link: &str) -> Self {
-        Link { name.as_string(), link.as_string() }
-    }
-}
-
 const LIST_ITEMS: &'static str = "#bodyContent > #mw-content-text > div ul > li > a";
 
 pub fn parse_page(page_contents: String) -> Vec<String> {
