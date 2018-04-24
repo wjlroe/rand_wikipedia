@@ -4,11 +4,12 @@ version = "0.1.0"
 authors = ["William Roe <git@wjlr.org.uk>"]
 
 [dependencies]
-hyper = "*"
-scraper = "*"
-rand = "*"
-clap = "*"
+hyper = "0.9.9"
+scraper = "0.3.1"
+rand = "0.3.14"
+clap = "2.6.0"
 
 [[bin]]
 name = "main"
 doc = false
+path = "src/main.rs"
