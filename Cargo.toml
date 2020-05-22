@@ -4,10 +4,10 @@ version = "0.1.0"
 authors = ["William Roe <git@wjlr.org.uk>"]
 
 [dependencies]
-reqwest = "0.9.9"
-scraper = "0.9"
-rand = "0.6"
-clap = "2.6.0"
+reqwest = { version = "0.10", features = ["blocking"] }
+scraper = "0.12"
+rand = "0.7"
+clap = "2.33"
 
 [[bin]]
 name = "rand_wikipedia"

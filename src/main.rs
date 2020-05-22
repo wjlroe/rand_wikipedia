@@ -3,20 +3,21 @@ extern crate rand_wikipedia;
 extern crate reqwest;
 
 use clap::{App, Arg};
+use std::error::Error;
 
 const COMPOSERS_BY_NAME: &'static str = "https://en.wikipedia.\
                                          org/wiki/List_of_composers_by_name";
 
-fn rand_item_from_page(page: &str) -> String {
-    let body_string = reqwest::get(page).unwrap().text().unwrap();
+fn rand_item_from_page(page: &str) -> Result<String, Box<dyn Error>> {
+    let body_string = reqwest::blocking::get(page)?.text()?;
     // let mut cached_file = File::create(page.to_string() + ".html").unwrap();
     // cached_file.write_all(body_string.as_bytes()).unwrap();
 
     let names = rand_wikipedia::parse_page(body_string);
-    rand_wikipedia::rand_name(&names)
+    Ok(rand_wikipedia::rand_name(&names))
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     let cli = App::new("Random wikipedia thing")
         .version("0.1")
         .arg(
@@ -44,8 +45,9 @@ fn main() {
         _ => Some(url),
     };
     if let Some(page_name) = page {
-        println!("{}", rand_item_from_page(page_name));
+        println!("{}", rand_item_from_page(page_name)?);
     } else {
         println!("'{}' not understood", cmd);
     }
+    Ok(())
 }
