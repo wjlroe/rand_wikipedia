@@ -12,9 +12,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: setup-msbuild
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v1
+        
+      - name: Setup Rust
+        uses: ATiltedTree/setup-rust@v1
+        with:
+          rust-version: 1.50.0
+          
+      - name: Build the thing
+        run: cargo build --release
 
       - uses: actions/upload-artifact@v2
         with:
-          name: darcs.exe
-          path: darcs.exe
+          name: rand_wikipedia.exe
+          path: target/release/rand_wikipedia.exe
