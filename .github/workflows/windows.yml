@@ -1,0 +1,20 @@
+name: Build on Windows
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup-msbuild
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: darcs.exe
+          path: darcs.exe
